@@ -7,6 +7,7 @@
     <groupId>io.github.dougllasfps</groupId>
     <artifactId>vendas</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>${project.packaging}</packaging> <!-- Correção aqui -->
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -14,10 +15,37 @@
         <version>2.2.4.RELEASE</version>
     </parent>
 
+    <profiles>
+        <profile>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <id>desenvolvimento</id>
+            <properties>
+                <project.packaging>jar</project.packaging> <!-- Definindo como jar -->
+                <tomcat.scope>compile</tomcat.scope>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>producao</id>
+            <properties>
+                <project.packaging>war</project.packaging> <!-- Definindo como war -->
+                <tomcat.scope>provided</tomcat.scope>
+            </properties>
+        </profile>
+    </profiles>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>${tomcat.scope}</scope>
         </dependency>
 
         <dependency>
@@ -46,6 +74,11 @@
         </dependency>
 
         <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
@@ -58,6 +91,17 @@
             <version>0.9.1</version>
         </dependency>
 
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.9.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>2.9.2</version>
+        </dependency>
     </dependencies>
 
     <build>
